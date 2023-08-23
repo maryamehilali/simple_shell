@@ -33,10 +33,16 @@ int main(void)
 		}
 		else
 		{	perror("./hsh"), free(command), free(input), free(command_parts); }
-	}}
+	}
+	return (0);
+}
 
-
-void execute(char *cmd, char ** argv)
+/**
+ * execute - function that fork a child and execute the command.
+ * @cmd: the full path of the command.
+ * @argv: command parts gotten from user.
+ */
+void execute(char *cmd, char **argv)
 {
 	int status;
 	pid_t child_pid;
@@ -52,10 +58,12 @@ void execute(char *cmd, char ** argv)
 	else
 		wait(&status);
 }
-
+/**
+ * exitbuiltin - function that exit the shell with a status.
+ * @argv: command and status gotten from user.
+ */
 void exitbuiltin(char **argv)
 {
-	
 	if (argv[1])
 	{
 		printf("argv[0] is %s\n", argv[0]);

@@ -15,7 +15,7 @@ extern char **environ;
 /**
  * struct builtin - a struct for pointers to the builtin fucntions,
  * @str: the command entered by the user,
- * @fct: the builtin function corresponding to the user's command.
+ * @f: the builtin function corresponding to the user's command.
  */
 typedef struct builtin
 {
