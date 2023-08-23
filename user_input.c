@@ -42,8 +42,8 @@ char *user_input(void)
 	char *buffer = NULL;
 	size_t buf_size = sizeof(char) * MAX_SIZE;
 
-	/*char_read = getline(&buffer, &buf_size, stdin);*/
-	char_read = _getline(&buffer, &buf_size);
+	char_read = getline(&buffer, &buf_size, stdin);
+	/*char_read = _getline(&buffer, &buf_size);*/
 	if (char_read < 0)
 	{
 		free(buffer);
