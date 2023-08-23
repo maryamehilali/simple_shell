@@ -66,7 +66,7 @@ void execute(char *cmd, char **argv)
 void exitbuiltin(char **argv)
 {
 	int exit_status;
-	
+
 	if (argv[1])
 	{
 		exit_status = _atoi(argv[1]);
