@@ -20,6 +20,5 @@ void (*get_builtin(char *cmd))(char **argv)
 	while (options[i].str != NULL &&
 			(_strncmp(options[i].str, cmd, _strlen(cmd))) != 0)
 	{	i++; }
-
 	return (options[i].f);
 }

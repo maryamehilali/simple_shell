@@ -23,8 +23,9 @@ int main(void)
 		fonct = get_builtin(command_parts[0]);
 		if (fonct)
 		{
+			free(input);
 			fonct(command_parts);
-			free(command_parts), free(input);
+			free(command_parts);
 		}
 		else if (command)
 		{
@@ -64,13 +65,15 @@ void execute(char *cmd, char **argv)
  */
 void exitbuiltin(char **argv)
 {
+	int exit_status;
+	
 	if (argv[1])
 	{
-		printf("argv[0] is %s\n", argv[0]);
-		printf("argv[1] is %s\n", argv[1]);
-		printf("atoi gave %d\n", _atoi(argv[1]));
-		exit(_atoi(argv[1]));
+		exit_status = _atoi(argv[1]);
+		free(argv);
+		exit(exit_status);
 	}
+		free(argv);
 		exit(EXIT_SUCCESS);
 }
 
