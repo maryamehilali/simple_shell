@@ -4,4 +4,5 @@ handle_builtin.c
 TEST_SUITE
 allowed_functions
 runchecker.bash
-hsh
+./hsh
+shell_tests

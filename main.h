@@ -20,7 +20,7 @@ extern char **environ;
 typedef struct builtin
 {
 	char *str;
-	void (*fct)(char **);
+	void (*f)(char **);
 } builtin_fct;
 
 extern char **environ;
@@ -32,11 +32,15 @@ int  _strlen(char *s);
 int _strncmp(const char *s1, const char *s2, int  n);
 char *_strcpy(char *dest, char *src);
 char *_strcat(char *dest, char *src);
-void print_env(void);
+void print_env(char **);
 void free_commands_array(char **array);
 char *_concat(char *n, char *s, char *v);
 char *_getenv(const char *n);
 void _setenv(char **arg);
 void _unsetenv(char **arg);
+void exitbuiltin(char **);
+int _atoi(char *);
+void execute(char *, char **);
+void (*get_builtin(char *))(char **);
 
 #endif

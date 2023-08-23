@@ -12,7 +12,7 @@ char *find_command(char *command)
 	char **dir;
 	struct stat st;
 
-	if ( _strncmp(command, "exit", 4) == 0
+	if (_strncmp(command, "exit", 4) == 0
 			|| _strncmp(command, "env", 3) == 0)
 		return (command);
 	while (environ[i])

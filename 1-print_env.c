@@ -2,12 +2,13 @@
 
 /**
  * print_env - Display the environment variables
- *
+ * @argv: command gotten from user.
  */
 
-void print_env(void)
+void print_env(char **argv)
 {
 	int i = 0;
+	(void) argv;
 
 	for (i = 0; environ[i]; i++)
 	{

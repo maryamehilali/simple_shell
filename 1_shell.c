@@ -8,8 +8,7 @@ int main(void)
 {
 	char **command_parts;
 	char *command, *input;
-	pid_t child_pid;
-	int status;
+	void (*fonct)(char **);
 
 	for (;;)
 	{
@@ -17,32 +16,53 @@ int main(void)
 		if (isatty(STDIN_FILENO) == 1)
 			write(1, "$ ", 2);
 		input = user_input(), command_parts = tokenize(input, " \t\n");
-		if (command_parts == NULL || command_parts[0] == NULL)
+		if (!command_parts || !command_parts[0])
 		{	free(input), free(command_parts);
 			continue; }
 		command = find_command(command_parts[0]);
-		if (command != NULL)
+		fonct = get_builtin(command_parts[0]);
+		if (fonct)
 		{
-			if (_strncmp(command_parts[0], "exit", 5) == 0)
-			{
-				free(input), free(command_parts);
-				exit(0); }
-			else if (_strncmp(command_parts[0], "env", 3) == 0)
-			{
-				free(input), free(command_parts);
-				print_env(); }
-			else
-			{	child_pid = fork();
-				if (child_pid == -1)
-				{	perror("./hsh"), exit(errno); }
-			else if (child_pid == 0)
-			{
-				if (execve(command, command_parts, environ) == -1)
-				{	perror("./hsh");
-					exit(errno); }}
-			else
-			{	wait(&status), errno = WIFEXITED(status);
-				free(input), free(command_parts), free(command); }}}
+			fonct(command_parts);
+			free(command_parts), free(input);
+		}
+		else if (command)
+		{
+			execute(command, command_parts);
+			free(input), free(command_parts), free(command);
+		}
 		else
-		{	perror("./hsh"), free(command), free(input),free(command_parts); }}
-	return (0); }
+		{	perror("./hsh"), free(command), free(input), free(command_parts); }
+	}}
+
+
+void execute(char *cmd, char ** argv)
+{
+	int status;
+	pid_t child_pid;
+
+	child_pid = fork();
+	if (child_pid == -1)
+	{	perror("./hsh"), exit(EXIT_FAILURE); }
+	else if (child_pid == 0)
+	{
+		if (execve(cmd, argv, environ) == -1)
+		{	perror("./hsh"), exit(EXIT_FAILURE); }
+	}
+	else
+		wait(&status);
+}
+
+void exitbuiltin(char **argv)
+{
+	
+	if (argv[1])
+	{
+		printf("argv[0] is %s\n", argv[0]);
+		printf("argv[1] is %s\n", argv[1]);
+		printf("atoi gave %d\n", _atoi(argv[1]));
+		exit(_atoi(argv[1]));
+	}
+		exit(EXIT_SUCCESS);
+}
+
