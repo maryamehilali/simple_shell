@@ -28,7 +28,9 @@ int main(void)
 				free(input), free(command_parts);
 				exit(0); }
 			else if (_strncmp(command_parts[0], "env", 3) == 0)
-				print_env();
+			{
+				free(input), free(command_parts);
+				print_env(); }
 			else
 			{	child_pid = fork();
 				if (child_pid == -1)
@@ -40,7 +42,8 @@ int main(void)
 					exit(errno); }}
 			else
 			{	wait(&status), errno = WIFEXITED(status);
-				free(input), free(command_parts); }}}
+				free(input), free(command), free(command_parts); }}}
 		else
-		{	perror("./hsh"), free(input), free(command_parts); }}
+		{	perror("./hsh"), free(input), free(command),
+			free(command_parts[0]), free(command_parts); }}
 	return (0); }

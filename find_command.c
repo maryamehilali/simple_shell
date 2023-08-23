@@ -32,7 +32,7 @@ char *find_command(char *command)
 	{
 		full_path = malloc(MAX_SIZE + _strlen(command) + 2);
 		if (full_path == NULL)
-		{	perror("hsh"), free(path), free(full_path), free(dir);
+		{	perror("hsh"), free(path), free(dir);
 			return (NULL); }
 		_strcpy(full_path, dir[j]), _strcat(full_path, "/");
 		_strcat(full_path, command);
@@ -42,6 +42,6 @@ char *find_command(char *command)
 			return (full_path); }
 		free(full_path), j++;
 	}
-	free(path);
+	free(path), free(dir);
 	return (NULL);
 }

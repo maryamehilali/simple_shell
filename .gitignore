@@ -1,3 +1,7 @@
 1_env.c
 2_env.c
 handle_builtin.c
+TEST_SUITE
+allowed_functions
+runchecker.bash
+hsh
