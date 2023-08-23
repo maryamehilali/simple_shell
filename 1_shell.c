@@ -38,12 +38,11 @@ int main(void)
 			else if (child_pid == 0)
 			{
 				if (execve(command, command_parts, environ) == -1)
-				{	free(input), free(command_parts),
-					free(command), perror("./hsh");
+				{	perror("./hsh");
 					exit(errno); }}
 			else
 			{	wait(&status), errno = WIFEXITED(status);
-				free(input), free(command), free(command_parts); }}}
+				free(input), free(command_parts), free(command); }}}
 		else
-		{	perror("./hsh"), free(input),free(command_parts); }}
+		{	perror("./hsh"), free(command), free(input),free(command_parts); }}
 	return (0); }

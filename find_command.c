@@ -12,9 +12,8 @@ char *find_command(char *command)
 	char **dir;
 	struct stat st;
 
-	if (_strncmp(command, "./", 2) == 0 || _strncmp(command, "../", 3) == 0
-	|| _strncmp(command, "/", 1) == 0 || _strncmp(command, "exit", 4) == 0
-	|| _strncmp(command, "env", 3) == 0)
+	if ( _strncmp(command, "exit", 4) == 0
+			|| _strncmp(command, "env", 3) == 0)
 		return (command);
 	while (environ[i])
 	{
@@ -28,20 +27,24 @@ char *find_command(char *command)
 	{	perror("hsh"), free(path);
 		return (NULL); }
 	_strcpy(path, environ[i]), dir = tokenize(path, ":=");
+	full_path = malloc(MAX_SIZE + _strlen(command));
+	if (full_path == NULL)
+	{	perror("hsh"), free(path), free(dir);
+		return (NULL); }
+	if (_strncmp(command, "./", 2) == 0 || _strncmp(command, "../", 3) == 0
+	|| _strncmp(command, "/", 1) == 0)
+	{	_strcpy(full_path, command), free(path), free(dir);
+		return (full_path); }
 	while (dir[j + 1])
 	{
-		full_path = malloc(MAX_SIZE + _strlen(command) + 2);
-		if (full_path == NULL)
-		{	perror("hsh"), free(path), free(dir);
-			return (NULL); }
 		_strcpy(full_path, dir[j]), _strcat(full_path, "/");
 		_strcat(full_path, command);
 		if (stat(full_path, &st) == 0)
 		{
 			free(path), free(dir);
 			return (full_path); }
-		free(full_path), j++;
+		j++;
 	}
-	free(path), free(dir);
+	free(full_path), free(path), free(dir);
 	return (NULL);
 }
