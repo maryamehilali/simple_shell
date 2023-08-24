@@ -10,8 +10,6 @@ void (*get_builtin(char *cmd))(char **argv)
 	builtin_fct options[] = {
 		{"env", print_env},
 		{"exit", exitbuiltin},
-		{"setenv", _setenv},
-		{"unsetenv", _unsetenv},
 		{NULL, NULL}
 	};
 
